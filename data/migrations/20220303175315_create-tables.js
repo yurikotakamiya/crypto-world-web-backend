@@ -29,5 +29,4 @@ exports.down = function(knex) {
     .dropTableIfExists('secret_keys')
     .dropTableIfExists('users')
     .dropTableIfExists('strategies')
-
 };

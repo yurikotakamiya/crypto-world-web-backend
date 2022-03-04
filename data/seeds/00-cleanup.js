@@ -1,7 +1,6 @@
-
+const { cleaner } = require('knex-cleaner')
 exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
+  return cleaner('knex').del()
     .then(function () {
       // Inserts seed entries
       return knex('table_name').insert([
