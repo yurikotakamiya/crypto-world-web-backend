@@ -9,7 +9,7 @@ const getBy = filter => {
 }
 
 const create = async user => {
-    const { user_id } = await db('users').insert(user)
+    const [ user_id ] = await db('users').insert(user)
     return getById(user_id)
 }
 
@@ -22,7 +22,7 @@ const update = (id, changes) => {
         })
 }
 
-const remove = id => {
+const remove = async id => {
     const result = await db('users').where({user_id: id}).del()
     return result
 }

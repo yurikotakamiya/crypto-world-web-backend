@@ -29,7 +29,7 @@ router.post('/login', usernameExists, (req, res, next) => {
     }
 })
 
-router.post('/password_change', usernameExists, (req, res, next) => {
+router.post('/change_password', usernameExists, (req, res, next) => {
     const { password, newPass } = req.body
     if (bcrypt.compareSync(password, req.user.password)) {
         const hash = bcrypt.hashSync(newPass, 12)
