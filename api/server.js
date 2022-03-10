@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const server = express()
 const userRoute = require('../api/users/route')
+const orderRoute = require('../api/orders/router')
 const session = require('express-session')
 const Store = require('connect-session-knex')(session)
 const knex = require('../data/db-config')
@@ -30,6 +31,7 @@ server.use(session(sessionConfig))
 server.use(express.json())
 
 server.use('/api/user', userRoute)
+server.use('/api/order', orderRoute)
 
 server.use((err, req, res, next) => {
     res.status(err.status || 500).json({

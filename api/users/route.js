@@ -45,7 +45,7 @@ router.post('/change_password', usernameExists, (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
     if (req.session.user) {
-        req.session.user.destroy(err => {
+        req.session.destroy(err => {
             if (err) {
                 next(err)
             } else {

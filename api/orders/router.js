@@ -1,7 +1,8 @@
 const Order = require('./model')
 const router = require('express').Router()
 const { validInput,
-        existsOrder
+        existsOrder,
+        compareChange
         } = require('../middleware/orders-middleware')
 
 router.post('/send', validInput, (req, res, next) => {

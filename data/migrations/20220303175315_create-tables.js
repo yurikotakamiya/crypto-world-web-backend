@@ -24,6 +24,10 @@ exports.up = function(knex) {
   })
   .createTable('orders', tbl => {
       tbl.increments('order_id')
+      tbl.integer('user_id')
+        .notNullable()
+        .references('user_id')
+        .inTable('users')
       tbl.integer('strategy_id')
         .notNullable()
         .references('strategy_id')
@@ -41,5 +45,5 @@ exports.down = function(knex) {
     .dropTableIfExists('secret_keys')
     .dropTableIfExists('users')
     .dropTableIfExists('strategies')
-    // .dropTableIfExists('orders')
+    .dropTableIfExists('orders')
 };
