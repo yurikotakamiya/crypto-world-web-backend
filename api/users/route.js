@@ -33,7 +33,7 @@ router.post('/change_password', usernameExists, (req, res, next) => {
     const { password, newPass } = req.body
     if (bcrypt.compareSync(password, req.user.password)) {
         const hash = bcrypt.hashSync(newPass, 12)
-        User.update(req.user.user_id, hash)
+        User.update(req.user.user_id, {password: hash})
             .then(result => {
                 res.json(result)
             })
