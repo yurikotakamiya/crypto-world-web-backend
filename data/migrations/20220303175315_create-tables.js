@@ -35,7 +35,7 @@ exports.up = function(knex) {
       tbl.double('order_size').notNullable()
       tbl.double('order_price').notNullable()
       tbl.string('order_side').notNullable()
-      tbl.dateTime('time').notNullable()
+      tbl.timestamp('created_at').defaultTo(knex.fn.now())
   })
 };
 
