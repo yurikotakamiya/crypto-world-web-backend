@@ -1,13 +1,28 @@
 const Order = require('../orders/model')
 
 const validInput = (req, res, next) => {
-    if (!req.body.strategy_id || !req.body.strategy_id.trim() ||
-        !req.body.trading_pair || !req.body.trading_pair.trim() ||
-        !req.body.order_size || !req.body.order_size.trim() ||
-        !req.body.order_price || !req.body.order_price.trim() ||
-        !req.body.order_side || !req.body.order_side.trim()) {
+    const { strategy_id,
+        trading_pair,
+        order_size,
+        order_price,
+        order_side } = req.body
+    if (!strategy_id ||
+        !trading_pair ||
+        !order_size ||
+        !order_price ||
+        !order_side) {
             next({status: 400, message: 'invalid input'})
-        } else { next() }
+        } else {
+            req.order = {
+                user_id: req.params.user_id,
+                strategy_id,
+                trading_pair,
+                order_size,
+                order_price,
+                order_side
+            }
+            next() 
+        }
 }
 
 const existsOrder = (req, res, next) => {
@@ -29,19 +44,19 @@ const compareChange = (req, res, next) => {
             order_side } = req.order
     let changes = []
     if (strategy_id != req.body.strategy_id) {
-        changes.push({strategy_id: req.body.strategy_id})
+        changes["strategy_id"] = req.body.strategy_id
     } 
     if (trading_pair != req.body.trading_pair) {
-        changes.push({trading_pair: req.body.trading_pair})
+        changes["trading_pair"] = req.body.trading_pair
     }
     if (order_size != req.body.order_size) {
-        changes.push({order_size: req.body.order_size})
+        changes["order_size"] = req.body.order_size
     }
     if (order_price != req.body.order_price) {
-        changes.push({order_price: req.body.order_price})
+        changes["order_price"] = req.body.order_price
     }
     if (order_side != req.body.order_side) {
-        changes.push({order_side: req.body.order_side})
+        changes["order_side"] = req.body.order_side
     }
     
     if (changes != []) {

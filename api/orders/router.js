@@ -5,8 +5,8 @@ const { validInput,
         compareChange
         } = require('../middleware/orders-middleware')
 
-router.post('/send', validInput, (req, res, next) => {
-    Order.create(req.body)
+router.post('/send/:user_id', validInput, (req, res, next) => {
+    Order.create(req.order)
         .then(order => { res.json(order) })
         .catch(e => next(e))
 })
@@ -16,6 +16,7 @@ router.get('/confirm/:order_id', existsOrder, (req, res, next) => {
 })
 
 router.post('/modify/:order_id', existsOrder, compareChange, (req, res, next) => {
+    console.log('here')
     Order.update(req.params.order_id, req.changes)
         .then(order => { res.json(order) })
         .catch(e => next(e))
