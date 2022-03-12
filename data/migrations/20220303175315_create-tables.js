@@ -53,9 +53,9 @@ exports.up = function(knex) {
       .references('strategy_id')
       .inTable('strategies')
     tbl.string('trading_pair', 10).notNullable()
-    tbl.double('order_size').notNullable()
-    tbl.double('order_price').notNullable()
-    tbl.string('order_side').notNullable()
+    tbl.double('trade_size').notNullable()
+    tbl.double('trade_price').notNullable()
+    tbl.string('trade_side').notNullable()
     tbl.timestamp('created_at').defaultTo(knex.raw('CURRENT_TIMESTAMP'))
   })
 };
@@ -66,4 +66,5 @@ exports.down = function(knex) {
     .dropTableIfExists('users')
     .dropTableIfExists('strategies')
     .dropTableIfExists('orders')
+    .dropTableIfExists('trade')
 };
