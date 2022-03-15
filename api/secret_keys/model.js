@@ -1,20 +1,20 @@
 const db = require('../../data/db-config')
 
 const getById = id => {
-    return db('security_keys').where({user_id: id}).first()
+    return db('secret_keys').where({user_id: id}).select('secret_key').first()
 }
 
 const getBy = filter => {
-    return db('security_keys').where(filter).first()
+    return db('secret_keys').where(filter).first()
 }
 
 const create = async newKey => {
-    const { user_id } = await db('security_keys').insert(newKey)
+    const { user_id } = await db('secret_keys').insert(newKey)
     return getById(user_id)
 }
 
 const update = (id, changes) => {
-    return db('security_keys')
+    return db('secret_keys')
         .where({user_id: id})
         .update(changes)
         .then(rows => {
@@ -22,8 +22,8 @@ const update = (id, changes) => {
         })
 }
 
-const remove = id => {
-    const result = await db('security_keys').where({user_id: id}).del()
+const remove = async id => {
+    const result = await db('secret_keys').where({user_id: id}).del()
     return result
 }
 
