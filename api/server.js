@@ -6,6 +6,7 @@ const orderRoute = require('../api/orders/router')
 const session = require('express-session')
 const Store = require('connect-session-knex')(session)
 const knex = require('../data/db-config')
+const cors = require('cors')
 
 const sessionConfig = {
     name: 'cww_session',
@@ -29,6 +30,7 @@ const sessionConfig = {
 server.use(session(sessionConfig))
 
 server.use(express.json())
+server.use(cors())
 
 server.use('/api/user', userRoute)
 server.use('/api/order', orderRoute)
