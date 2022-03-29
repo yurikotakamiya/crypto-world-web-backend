@@ -19,6 +19,30 @@ exports.up = function(knex) {
     tbl.string('strategy_name', 64).notNullable()
     tbl.text('description').notNullable()
   })
+  .createTable('order_sides', tbl => {
+    tbl.tinyint('order_side_id').unsigned().primary()
+    tbl.string('description', 16)
+  })
+  .createTable('order_actions', tbl => {
+    tbl.tinyint('order_action_id').unsigned().primary()
+    tbl.string('description', 16)
+  })
+  .createTable('order_states', tbl => {
+    tbl.tinyint('order_state_id').unsigned().primary()
+    tbl.string('description', 16)
+  })
+  .createTable('order_types', tbl => {
+    tbl.tinyint('order_type_id').unsigned().primary()
+    tbl.string('description', 16)
+  })
+  .createTable('exchanges', tbl => {
+    tbl.tinyint('exchange_id').unsigned().primary()
+    tbl.string('description', 16)
+  })
+  .createTable('trading_pairs', tbl => {
+    tbl.tinyint('trading_pair_id').unsigned().primary()
+    tbl.string('description', 16)
+  })
   .createTable('orders', tbl => {
     tbl.bigint('order_id').unsigned().notNullable()
     tbl.integer('user_id')
@@ -107,30 +131,6 @@ exports.up = function(knex) {
       .inTable('order_types')
     tbl.bigint('version')
     tbl.primary(['order_id', 'version'])
-  })
-  .createTable('order_sides', tbl => {
-    tbl.tinyint('order_side_id')
-    tbl.string('description', 16)
-  })
-  .createTable('order_actions', tbl => {
-    tbl.tinyint('order_action_id')
-    tbl.string('description', 16)
-  })
-  .createTable('order_states', tbl => {
-    tbl.tinyint('order_state_id')
-    tbl.string('description', 16)
-  })
-  .createTable('order_types', tbl => {
-    tbl.tinyint('order_type_id')
-    tbl.string('description', 16)
-  })
-  .createTable('exchanges', tbl => {
-    tbl.increments('exchange_id')
-    tbl.string('description', 16)
-  })
-  .createTable('trading_pairs', tbl => {
-    tbl.increments('trading_pair_id')
-    tbl.string('description', 16)
   })
   .createTable('api_keys', tbl => {
     tbl.integer('user_id')
