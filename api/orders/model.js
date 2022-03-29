@@ -27,5 +27,4 @@ module.exports = {
     getBy,
     create,
     update,
-    remove
 }
