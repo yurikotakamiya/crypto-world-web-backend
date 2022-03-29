@@ -5,7 +5,7 @@ const getById = id => {
 }
 
 const getBy = filter => {
-    return db('orders').where(filter).first()
+    return db('orders').where(filter)
 }
 
 const create = async order => {
