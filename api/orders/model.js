@@ -22,17 +22,6 @@ const update = (id, changes) => {
         })
 }
 
-const remove = async id => {
-    const result = await db('orders')
-                        .where({order_id: id})
-                        .returning('deleted')
-                        .update({
-                            deleted: true,
-                            deleted_at: new Date()
-                        })
-    return result
-}
-
 module.exports = {
     getById,
     getBy,
