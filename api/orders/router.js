@@ -23,7 +23,7 @@ router.post('/modify/:order_id', existsOrder, compareChange, (req, res, next) =>
 })
 
 router.post('/cancel/:order_id', existsOrder, (req, res, next) => {
-    Order.remove(req.params.order_id)
+    Order.update(req.params.order_id, req.changes)
         .then(order => { res.json(order) })
         .catch(e => next(e))
 })
