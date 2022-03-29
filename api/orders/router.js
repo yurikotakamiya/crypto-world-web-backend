@@ -4,6 +4,7 @@ const { validInput,
         existsOrder,
         compareChange
         } = require('../middleware/orders-middleware')
+const { restricted } = require('../middleware/auth-middleware')
 
 router.post('/send/:user_id', validInput, (req, res, next) => {
     Order.create(req.order)
@@ -11,8 +12,8 @@ router.post('/send/:user_id', validInput, (req, res, next) => {
         .catch(e => next(e))
 })
 
-router.post('/history/:user_id', (req, res, next) => {
-    Order.getBy(req.body)
+router.post('/history/:user_id', restricted, (req, res, next) => {
+    Order.getBy(req.params.user_id, req.body)
         .then(order => { res.json(order)})
         .catch(e => next(e))
 })

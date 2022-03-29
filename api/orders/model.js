@@ -4,7 +4,7 @@ const getById = id => {
     return db('orders').where({order_id: id}).first()
 }
 
-const getBy = filter => {
+const getBy = (user_id, filter) => {
     return db('orders').where(filter)
 }
 
