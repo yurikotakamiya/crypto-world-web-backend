@@ -175,7 +175,8 @@ exports.up = function(knex) {
       .references('exchange_id')
       .inTable('exchanges')
     tbl.string('api_key').notNullable()
-    tbl.string('api_secret_key').notNullable()
+    tbl.string('secret_key').notNullable()
+    tbl.primary(['user_id', 'exchange_id'])
   })
   .createTable('strategy_configs', tbl => {
     tbl.integer('user_id')
@@ -198,6 +199,10 @@ exports.up = function(knex) {
       .notNullable()
       .references('strategy_id')
       .inTable('strategies')
+    tbl.double('param_interval_order_size')
+    tbl.double('param_interval_price_interval')
+    tbl.double('param_interval_profit_price_change')
+    tbl.primary(['user_id', 'exchange_id', 'trading_pair_id', 'strategy_id'])
   })
 };
 
