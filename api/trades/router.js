@@ -4,6 +4,7 @@ const { validInput,
         existsTrade,
         compareChange
         } = require('../middleware/trades-middleware')
+const { restricted } = require('../middleware/auth-middleware')
 
 router.post('/send/:user_id', validInput, (req, res, next) => {
     Trade.create(req.trade)
@@ -13,6 +14,15 @@ router.post('/send/:user_id', validInput, (req, res, next) => {
 
 router.get('/confirm/:trade_id', existsTrade, (req, res, next) => {
     res.json(req.trade)
+})
+
+router.post('/history', restricted, (req, res, next) => {
+    Trade.getHistory(req.body)
+        .then(trade => { 
+            console.log(trade)
+            res.json(trade)
+        })
+        .catch(e => next(e))
 })
 
 router.post('/modify/:trade_id', existsTrade, compareChange, (req, res, next) => {

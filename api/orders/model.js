@@ -27,7 +27,7 @@ const getHistory = async filter => {
             'osi.description as order_side',
             'ost.description as order_state',
             'ot.description as order_type',
-            'ts.description as strategy' )
+            'ts.strategy_name as strategy' )
     return result
 }
 
