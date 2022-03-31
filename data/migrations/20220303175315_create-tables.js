@@ -88,7 +88,7 @@ exports.up = function(knex) {
     tbl.integer('version')
   })
   .createTable('order_history', tbl => {
-    tbl.bigint('order_id').unsigned().notNullable().primary()
+    tbl.bigint('order_id').unsigned().notNullable()
     tbl.integer('user_id')
       .unsigned()
       .notNullable()

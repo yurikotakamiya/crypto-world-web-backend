@@ -5,7 +5,7 @@ const {
     validInput,
     uniqueUsername,
     usernameExists,
-    } = require('../middleware/users-middleware')   
+    } = require('../middleware/users-middleware')
 
 router.post('/register', validInput, uniqueUsername, (req, res, next) => {
     const { username, password, email } = req.body
@@ -22,8 +22,9 @@ router.post('/login', usernameExists, (req, res, next) => {
     if (bcrypt.compareSync(password, req.user.password)) {
         req.session.user = req.user
         res.json({
-            message: `welcome back ${req.session.user.username}`,
-            user_id: req.session.user.user_id        
+            message: `welcome back ${req.user.username}`,
+            user_id: req.session.user.user_id,
+            session: req.session.id
         })
     } else {
         next({status: 404, message: 'invalid credentials'})
