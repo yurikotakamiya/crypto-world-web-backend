@@ -25,7 +25,7 @@ const getHistory = async filter => {
             'tp.description as trading_pair', 
             'oa.description as order_action',
             'osi.description as order_side',
-            'ost.description as order state',
+            'ost.description as order_state',
             'ot.description as order_type',
             'ts.description as strategy' )
     return result
