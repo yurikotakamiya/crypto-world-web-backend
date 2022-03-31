@@ -27,10 +27,17 @@ const remove = async id => {
     return result
 }
 
+const sessionCheck = async sid => {
+    const result = await db('session').where({sid})
+    console.log(result)
+    if (!result) return false
+    else return true
+}
 module.exports = {
     getById,
     getBy,
     create,
     update,
-    remove
+    remove,
+    sessionCheck
 }
