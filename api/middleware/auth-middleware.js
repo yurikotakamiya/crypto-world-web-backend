@@ -4,11 +4,11 @@ function restricted(req, res, next) {
   const { sid } = req.headers
   if (sid) {
     Users.sessionCheck(sid)
-      .then(res => {
+    .then(res => {
         if (res) {
           next()
         } else {
-          next({status: 401, "message": "You shall not pass!"})    
+          next({status: 401, message: "You shall not pass!"})    
         }
       })
       .catch(e => next(e))

@@ -12,9 +12,12 @@ router.post('/send/:user_id', validInput, (req, res, next) => {
         .catch(e => next(e))
 })
 
-router.post('/history/:user_id', restricted, (req, res, next) => {
-    Order.getBy(req.params.user_id, req.body)
-        .then(order => { res.json(order)})
+router.post('/history', restricted, (req, res, next) => {
+    Order.getHistory(req.body)
+        .then(order => { 
+            console.log(order)
+            res.json(order)
+        })
         .catch(e => next(e))
 })
 
