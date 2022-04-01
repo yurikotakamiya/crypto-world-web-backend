@@ -1,9 +1,10 @@
 require('dotenv').config()
 const express = require('express')
 const server = express()
-const userRoute = require('../api/users/route')
-const orderRoute = require('../api/orders/router')
+const userRoute = require('./users/router')
+const orderRoute = require('./orders/router')
 const tradeRoute = require('./trades/router')
+const apiRoute = require('./api_secret_keys/router')
 const session = require('express-session')
 const Store = require('connect-session-knex')(session)
 const knex = require('../data/db-config')
@@ -36,6 +37,7 @@ server.use(cors())
 server.use('/api/user', userRoute)
 server.use('/api/order', orderRoute)
 server.use('/api/trade', tradeRoute)
+server.use('/api/setting', apiRoute)
 
 server.use((err, req, res, next) => {
     res.status(err.status || 500).json({
