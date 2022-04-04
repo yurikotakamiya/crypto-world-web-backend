@@ -15,7 +15,6 @@ router.post('/send/:user_id', validInput, (req, res, next) => {
 router.post('/history', restricted, (req, res, next) => {
     Order.getHistory(req.body)
         .then(order => { 
-            console.log(order)
             res.json(order)
         })
         .catch(e => next(e))
@@ -26,7 +25,6 @@ router.get('/confirm/:order_id', existsOrder, (req, res, next) => {
 })
 
 router.post('/modify/:order_id', existsOrder, compareChange, (req, res, next) => {
-    console.log('here')
     Order.update(req.params.order_id, req.changes)
         .then(order => { res.json(order) })
         .catch(e => next(e))

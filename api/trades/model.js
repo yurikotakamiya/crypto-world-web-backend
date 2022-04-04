@@ -24,7 +24,6 @@ const getHistory = async filter => {
             'osi.description as trade_side',            
             'ot.description as trade_type',
             'ts.strategy_name as strategy' )
-            console.log('here', result, filter)
     return result
 }
 

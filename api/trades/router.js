@@ -19,14 +19,12 @@ router.get('/confirm/:trade_id', existsTrade, (req, res, next) => {
 router.post('/history', restricted, (req, res, next) => {
     Trade.getHistory(req.body)
         .then(trade => { 
-            console.log(trade)
             res.json(trade)
         })
         .catch(e => next(e))
 })
 
 router.post('/modify/:trade_id', existsTrade, compareChange, (req, res, next) => {
-    console.log('here')
     Trade.update(req.params.order_id, req.changes)
         .then(trade => { res.json(trade) })
         .catch(e => next(e))

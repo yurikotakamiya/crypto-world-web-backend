@@ -29,7 +29,6 @@ const remove = async id => {
 
 const sessionCheck = async sid => {
     const result = await db('sessions').where({sid})
-    console.log(result)
     if (!result) return false
     else return true
 }
