@@ -29,7 +29,6 @@ const uniqueEmail = (req, res, next) => {
             if (user) {
                 next({status: 400, message: 'email is already taken'})
             } else {
-                req.user = user
                 next()
             }
         })
@@ -50,9 +49,25 @@ const usernameExists = (req, res, next) => {
         .catch(e => next(e))    
 }
 
+const userIdExists = (req, res, next) => {
+    const { user_id } = req.headers
+    User.getBy({user_id})
+        .then(user => {
+            if (!user) {
+                next({status: 400, message: 'username does not exist'})
+            } else {
+                console.log(user)
+                req.user = user
+                next()
+            }
+        })
+        .catch(e => next(e))    
+}
+
 module.exports = {
     validInput,
     uniqueUsername,
     uniqueEmail,
     usernameExists,
+    userIdExists
 }

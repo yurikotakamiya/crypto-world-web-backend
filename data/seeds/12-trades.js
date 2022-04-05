@@ -3,6 +3,9 @@ exports.seed = function(knex) {
     .then(function () {
       return knex('trades').insert([
         { trade_id: 1, 
+          order_id: 1,
+          trade_notional:1.5,
+          trade_time_in_force_id: 1,
           user_id: 1, 
           strategy_id: 1, 
           trading_pair_id: 1, 

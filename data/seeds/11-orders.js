@@ -13,6 +13,9 @@ exports.seed = function(knex) {
           order_state_id: 2, 
           order_leaves_quantity: 0,
           order_type_id: 1, 
+          client_order_id: 1,
+          order_time_in_force_id: 1,
+          order_executed_quantity: 1.25,
           version: 1234,
         }
       ])

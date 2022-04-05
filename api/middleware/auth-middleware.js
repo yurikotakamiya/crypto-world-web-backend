@@ -8,7 +8,7 @@ function restricted(req, res, next) {
         if (res) {
           next()
         } else {
-          next({status: 401, message: "You shall not pass!"})    
+          next({status: 401, message: 'You shall not pass!'})    
         }
       })
       .catch(e => next(e))

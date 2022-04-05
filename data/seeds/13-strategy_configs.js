@@ -9,6 +9,7 @@ exports.seed = function(knex) {
           param_interval_order_size: 2.5,
           param_interval_price_interval: 1.5,
           param_interval_profit_price_change: 0.5,
+          param_interval_start_price: 1.2,
         },
       ]);
     })

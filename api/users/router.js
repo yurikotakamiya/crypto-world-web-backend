@@ -5,9 +5,12 @@ const {
     validInput,
     uniqueUsername,
     usernameExists,
+    uniqueEmail,
+    userIdExists
     } = require('../middleware/users-middleware')
+const { restricted } = require('../middleware/auth-middleware')
 
-router.post('/register', validInput, uniqueUsername, (req, res, next) => {
+router.post('/register', validInput, uniqueUsername, uniqueEmail, (req, res, next) => {
     const { username, password, email } = req.body
     const hash = bcrypt.hashSync(password, 12)
     User.create({username, password: hash, email})
@@ -31,7 +34,25 @@ router.post('/login', usernameExists, (req, res, next) => {
     }
 })
 
-router.post('/change_password', usernameExists, (req, res, next) => {
+router.post('/user_info', restricted, (req, res, next) => {
+    User.getById(req.headers.user_id)
+        .then(user => res.json(user))
+        .catch(e => next(e))
+})
+
+router.post('/change_username', restricted, uniqueUsername, (req, res, next) => {
+    User.update(req.headers.user_id, req.body)
+        .then(user => res.json(user))
+        .catch(e => next(e))
+})
+
+router.post('/change_email', restricted, uniqueEmail, (req, res, next) => {
+    User.update(req.headers.user_id, req.body)
+        .then(user => res.json(user))
+        .catch(e => next(e))
+})
+
+router.post('/change_password', restricted, userIdExists, (req, res, next) => {
     const { password, newPass } = req.body
     if (bcrypt.compareSync(password, req.user.password)) {
         const hash = bcrypt.hashSync(newPass, 12)
