@@ -4,6 +4,7 @@ const server = express()
 const userRoute = require('./users/router')
 const orderRoute = require('./orders/router')
 const tradeRoute = require('./trades/router')
+const strategyRoute = require('./strategies/router')
 const apiRoute = require('./api_secret_keys/router')
 const session = require('express-session')
 const Store = require('connect-session-knex')(session)
@@ -38,6 +39,7 @@ server.use('/api/user', userRoute)
 server.use('/api/order', orderRoute)
 server.use('/api/trade', tradeRoute)
 server.use('/api/setting', apiRoute)
+server.use('/api/strategy', strategyRoute)
 
 server.use((err, req, res, next) => {
     res.status(err.status || 500).json({

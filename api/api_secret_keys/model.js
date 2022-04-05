@@ -7,7 +7,14 @@ const getById = id => {
 const getBy = (user_id, exchange_id) => {
     return db('api_keys').where({user_id, exchange_id})
 }
-
+const getExchange = async user_id => {
+    const exchange_id = await db('api_keys as ak')
+                                .leftJoin('exchanges as ex', 'ak.exchange_id', 'ex.exchange_id')
+                                .where({user_id: user_id})
+                                .select('ex.description as exchange_name', 'ex.exchange_id')
+                                
+    return exchange_id
+}
 const create = async api => {
     await db('api_keys').insert(api)    
     const { user_id } = api
@@ -33,5 +40,6 @@ module.exports = {
     getBy,
     create,
     update,
-    remove
+    remove,
+    getExchange
 }
