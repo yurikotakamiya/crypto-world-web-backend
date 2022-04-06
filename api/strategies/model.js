@@ -45,7 +45,7 @@ const update = (filter, changes) => {
 }
 
 const remove = async filter => {
-    const result = await db('strategies').where(filter).del()
+    const result = await db('strategy_configs').where(filter).del()
     return result
 }
 

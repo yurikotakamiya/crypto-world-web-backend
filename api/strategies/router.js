@@ -42,10 +42,12 @@ router.post('/edit', restricted, validInput, existsConfig,  (req, res, next) => 
         .catch(e => next(e))
 })
 
-// router.post('/modify', existsApi, compareChange, (req, res, next) => {
-//     Api.update(req.headers.user_id, req.changes)
-//         .then(api => { res.json(api) })
-//         .catch(e => next(e))
-// })
+router.post('/delete', existsConfig, (req, res, next) => {
+    const { user_id, exchange_id, trading_pair_id, strategy_id } = req.body
+    const filter = {user_id, exchange_id, trading_pair_id, strategy_id}
+    Strategy.remove(filter)
+        .then(deleted => { res.json(deleted) })
+        .catch(e => next(e))
+})
 
 module.exports = router

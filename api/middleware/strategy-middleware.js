@@ -36,7 +36,7 @@ const validInput = (req, res, next) => {
 }
 
 const existsConfig = (req, res, next) => {
-    const { user_id, exchange_id, trading_pair_id, strategy_id } = req.strategy
+    const { user_id, exchange_id, trading_pair_id, strategy_id } = req.body
     Strategy.getBy({user_id, exchange_id, trading_pair_id, strategy_id})
         .then(s => {
             if (s) {                
