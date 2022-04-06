@@ -1,7 +1,8 @@
 const Strategy = require('./model')
 const Api = require('../api_secret_keys/model')
 const router = require('express').Router()
-const { validInput
+const { validInput,
+        existsConfig,
         } = require('../middleware/strategy-middleware')
 const { restricted } = require('../middleware/auth-middleware')
 router.post('/get_exchange', restricted, (req, res, next) => {
@@ -33,11 +34,13 @@ router.post('/get_strategy_configs', restricted, (req, res, next) => {
         .catch(e => next(e))
 })
 
-// router.post('/edit/:exchange_id', existsApi, (req, res, next) => {
-//     Api.getBy(req.headers.user_id, req.params.exchange_id)
-//         .then(a => { res.json(a)})
-//         .catch(e => next(e))
-// })
+router.post('/edit', restricted, validInput, existsConfig,  (req, res, next) => {
+    const { user_id, exchange_id, trading_pair_id, strategy_id } = req.strategy
+    const filter = {user_id, exchange_id, trading_pair_id, strategy_id}
+    Strategy.update(filter, req.strategy)
+        .then(s => { res.json(s)})
+        .catch(e => next(e))
+})
 
 // router.post('/modify', existsApi, compareChange, (req, res, next) => {
 //     Api.update(req.headers.user_id, req.changes)

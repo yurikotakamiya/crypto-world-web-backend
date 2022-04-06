@@ -1,7 +1,8 @@
 const Strategy = require('../strategies/model')
 
 const validInput = (req, res, next) => {
-    const { user_id } = req.headers
+    let { user_id } = req.headers
+    user_id = parseInt(user_id)
     const { exchange_id,
         trading_pair_id,
             strategy_id } = req.body
@@ -34,16 +35,16 @@ const validInput = (req, res, next) => {
     }
 }
 
-// const existsStrategy = (req, res, next) => {
-//     Strategy.getById(req.body.exchange_id)
-//         .then(a => {
-//             if (a) {
-//                 req.api = a
-//                 next()
-//             } else { next({status: 404, message: 'trade not found'}) }
-//         })
-//         .catch(e => next(e))
-// }
+const existsConfig = (req, res, next) => {
+    const { user_id, exchange_id, trading_pair_id, strategy_id } = req.strategy
+    Strategy.getBy({user_id, exchange_id, trading_pair_id, strategy_id})
+        .then(s => {
+            if (s) {                
+                next()
+            } else { next({status: 404, message: 'strategy config was not found'}) }
+        })
+        .catch(e => next(e))
+}
 
 const compareChange = (req, res, next) => {    
     const { exchange_id,
@@ -68,4 +69,4 @@ const compareChange = (req, res, next) => {
     }
 }
 
-module.exports = { validInput, compareChange }
+module.exports = { validInput, existsConfig, compareChange }

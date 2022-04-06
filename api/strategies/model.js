@@ -35,17 +35,17 @@ const create = async strategy => {
     return getBy({user_id, exchange_id, trading_pair_id, strategy_id})
 }
 
-const update = (id, changes) => {
-    return db('strategies')
-        .where({strategy_id: id})
+const update = (filter, changes) => {
+    return db('strategy_configs')
+        .where(filter)
         .update(changes)
         .then(rows => {
-            return getById(id)
+            return getBy(filter)
         })
 }
 
-const remove = async id => {
-    const result = await db('strategies').where({strategy_id: id}).del()
+const remove = async filter => {
+    const result = await db('strategies').where(filter).del()
     return result
 }
 
