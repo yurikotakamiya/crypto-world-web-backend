@@ -7,10 +7,12 @@ const validInput = (req, res, next) => {
             trading_pair_id,
             monitor_id,
             param_rsi_low_threshold,
-            param_rsi_high_threshold } = req.body
+            param_rsi_high_threshold,
+            param_rsi_time_interval } = req.body
     if (monitor_id == 1) {
         if (!param_rsi_low_threshold ||
-            !param_rsi_high_threshold ||            
+            !param_rsi_high_threshold ||
+            !param_rsi_time_interval ||            
             !exchange_id ||
             !trading_pair_id ||
             !monitor_id) {
@@ -22,7 +24,8 @@ const validInput = (req, res, next) => {
                 trading_pair_id,
                 monitor_id,
                 param_rsi_low_threshold,
-                param_rsi_high_threshold
+                param_rsi_high_threshold,
+                param_rsi_time_interval
             }
             next() 
         }        

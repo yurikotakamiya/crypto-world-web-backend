@@ -47,6 +47,11 @@ exports.up = function(knex) {
     tbl.tinyint('time_in_force_id').unsigned().primary()
     tbl.string('description', 8)
   })
+  .createTable('candlestick_intervals', tbl => {
+    tbl.tinyint('candlestick_interval_id').unsigned().notNullable().primary()
+    tbl.string('candlestick_interval_name', 64)
+    tbl.text('description')
+  })
   .createTable('orders', tbl => {
     tbl.bigint('order_id').unsigned().notNullable().primary()
     tbl.integer('user_id')
@@ -253,9 +258,15 @@ exports.up = function(knex) {
       .notNullable()
       .references('monitor_id')
       .inTable('monitors')
+    tbl.tinyint('param_rsi_time_interval')
+      .unsigned()
+      .notNullable()
+      .references('candlestick_interval_id')
+      .inTable('candlestick_intervals')
     tbl.double('param_rsi_low_threshold')
     tbl.double('param_rsi_high_threshold')
   })
+    
 };
 
 exports.down = function(knex) {

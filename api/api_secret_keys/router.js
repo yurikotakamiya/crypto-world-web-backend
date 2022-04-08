@@ -4,8 +4,9 @@ const { validInput,
         existsApi,
         compareChange
         } = require('../middleware/api-key-middleware')
+const { restricted } = require('../middleware/auth-middleware')
 
-router.post('/send', validInput, (req, res, next) => {
+router.post('/send', restricted, validInput, (req, res, next) => {
     Api.create(req.api)
         .then(a => { res.json(a) })
         .catch(e => next(e))
@@ -28,5 +29,11 @@ router.post('/modify', existsApi, compareChange, (req, res, next) => {
         .then(api => { res.json(api) })
         .catch(e => next(e))
 })
+router.post('/delete', (req, res, next) => {
+    const { user_id, exchange_id } = req.body
+    Api.remove({user_id, exchange_id})
+        .then(r => res.json(r))
+        .catch(e => next(e))
+}) 
 
 module.exports = router

@@ -6,17 +6,23 @@ const getMonitor = () => {
 const getById = id => {
     return db('monitor_configs as sc').where({user_id: id})
             .leftJoin('monitors as m', 'm.monitor_id', 'sc.monitor_id')
+            .leftJoin('candlestick_intervals as ci', 'ci.candlestick_interval_id', 'sc.param_rsi_time_interval')
             .leftJoin('exchanges as ex', 'sc.exchange_id', 'ex.exchange_id')        
             .leftJoin('trading_pairs as tp', 'sc.trading_pair_id', 'tp.trading_pair_id')
             .select('*',
                     'm.monitor_name',
                     'ex.description as exchange_name',
-                    'tp.description as trading_pair',               
+                    'tp.description as trading_pair',
+                    'ci.description as param_rsi_time_interval'            
                     )
 }
 
 const getExchange = () => {
     return db('exchanges')
+            .select('*')
+}
+const getInterval = () => {
+    return db('candlestick_intervals')
             .select('*')
 }
 
@@ -49,6 +55,7 @@ module.exports = {
     getBy,
     getMonitor,
     getExchange,
+    getInterval,
     create,
     update,
     remove,

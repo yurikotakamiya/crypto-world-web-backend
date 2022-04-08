@@ -7,7 +7,8 @@ exports.seed = function(knex) {
           trading_pair_id: 2, 
           monitor_id: 1,
           param_rsi_low_threshold:10,
-          param_rsi_high_threshold: 100
+          param_rsi_high_threshold: 100,
+          param_rsi_time_interval: 1,
         },
       ]);
     })

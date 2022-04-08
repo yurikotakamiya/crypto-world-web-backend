@@ -39,7 +39,7 @@ server.use(cors())
 server.use('/api/user', userRoute)
 server.use('/api/order', orderRoute)
 server.use('/api/trade', tradeRoute)
-server.use('/api/setting', apiRoute)
+server.use('/api/apis', apiRoute)
 server.use('/api/strategy', strategyRoute)
 server.use('/api/monitor', monitorRoute)
 

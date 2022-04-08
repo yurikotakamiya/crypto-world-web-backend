@@ -1,7 +1,9 @@
 const db = require('../../data/db-config')
 
 const getById = id => {
-    return db('api_keys').where({user_id: id}).select('*')
+    return db('api_keys as a').where({user_id: id})
+        .leftJoin('exchanges as ex', 'a.exchange_id', 'ex.exchange_id')
+        .select('*')
 }
 
 const getBy = (user_id, exchange_id) => {
@@ -30,8 +32,8 @@ const update = (id, changes) => {
         })
 }
 
-const remove = async id => {
-    const result = await db('api_keys').where({user_id: id}).del()
+const remove = async filter => {
+    const result = await db('api_keys').where(filter).del()
     return result
 }
 

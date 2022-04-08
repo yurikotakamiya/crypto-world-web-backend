@@ -26,7 +26,11 @@ router.get('/get_monitors', (req, res, next) => {
         .then(m => res.json(m))
         .catch(e => next(e))
 })
-
+router.get('/get_interval', (req, res, next) => {
+    Monitor.getInterval()
+        .then(i => res.json(i))
+        .catch(e => next(e))
+})
 router.post('/edit', restricted, validInput, existsConfig,  (req, res, next) => {
     const { user_id, exchange_id, trading_pair_id, monitor_id } = req.monitor
     const filter = {user_id, exchange_id, trading_pair_id, monitor_id}
