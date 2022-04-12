@@ -56,7 +56,6 @@ const userIdExists = (req, res, next) => {
             if (!user) {
                 next({status: 400, message: 'username does not exist'})
             } else {
-                console.log(user)
                 req.user = user
                 next()
             }

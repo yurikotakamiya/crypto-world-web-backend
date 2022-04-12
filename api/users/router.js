@@ -56,13 +56,13 @@ router.post('/change_password', restricted, userIdExists, (req, res, next) => {
     const { password, newPass } = req.body
     if (bcrypt.compareSync(password, req.user.password)) {
         const hash = bcrypt.hashSync(newPass, 12)
-        User.update(req.user.user_id, {password: hash})
+        User.update(req.headers.user_id, {password: hash})
             .then(result => {
                 res.json(result)
             })
             .catch(e => next(e))
     } else {
-        res.json({message: 'invalid credential'})
+        next({status:400, message: 'invalid credential'})
     }
 })
 
@@ -76,7 +76,7 @@ router.post('/logout', (req, res, next) => {
             }
         })
     } else {
-        res.json({message: 'no session data found'})
+        next({status: 400, message: 'no session data found'})
     }
 })
 
